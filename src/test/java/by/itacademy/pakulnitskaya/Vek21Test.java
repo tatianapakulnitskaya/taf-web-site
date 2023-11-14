@@ -25,7 +25,7 @@ public class Vek21Test {
         driver.findElement(By.xpath(vek21Page.buttonAccountLocator)).click();
         driver.findElement(By.xpath(vek21Page.buttonEnterLocator)).click();
         Thread.sleep(4000);
-        driver.findElement(By.xpath(vek21Page.buttonAdvertisementClose)).click();
+        driver.findElement(By.xpath(vek21Page.buttonAdvertisementCloseLocator)).click();
     }
 
     @Test

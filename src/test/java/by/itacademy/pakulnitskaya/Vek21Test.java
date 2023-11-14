@@ -80,7 +80,7 @@ public class Vek21Test {
     }
 
     @Test
-    public void vek21TestIncorrectPassword() {
+    public void vek21TestIncorrectPassword() throws InterruptedException {
 
         driver.findElement(By.xpath(vek21Page.inputEmailLocator)).sendKeys("Test@test.test");
         driver.findElement(By.xpath(vek21Page.inputPasswrodLocator)).sendKeys("Test");

@@ -9,8 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Vek21Test {
-    WebDriver driver;
-    Vek21Page vek21Page;
+    private WebDriver driver;
+    private Vek21Page vek21Page;
 
     @BeforeEach
     public void loadPage() throws InterruptedException {
@@ -19,23 +19,23 @@ public class Vek21Test {
         driver.get("https://www.21vek.by/");
         Thread.sleep(2000);
 
-        vek21Page = new Vek21Page();
+        vek21Page = new Vek21Page(driver);
 
-        driver.findElement(By.xpath(vek21Page.buttonAcceptCookiesLocator)).click();
-        driver.findElement(By.xpath(vek21Page.buttonAccountLocator)).click();
-        driver.findElement(By.xpath(vek21Page.buttonEnterLocator)).click();
-        Thread.sleep(4000);
-        driver.findElement(By.xpath(vek21Page.buttonAdvertisementCloseLocator)).click();
+        vek21Page.clickButtonAcceptCookies();
+        vek21Page.clickButtonAccount();
+        vek21Page.clickButtonEnter();
+        Thread.sleep(9000);
+        vek21Page.clickAdvertisementClose();
     }
 
     @Test
     public void vek21TestEmptyEmailPassword() {
 
-        driver.findElement(By.xpath(vek21Page.buttonSubmitLocator)).click();
-        String actualErrorMessageEmptyEmail = driver.findElement(By.xpath((vek21Page.errorMessageEmptyEmailLocator))).getText();
-        String actualErrorMessageEmptyPassword = driver.findElement(By.xpath((vek21Page.errorMessageEmptyPasswordLocator))).getText();
-        boolean errorIconEmail = driver.findElement(By.xpath(vek21Page.errorIconEmailLocator)).isDisplayed();
-        boolean errorIconPassword = driver.findElement(By.xpath(vek21Page.errorIconPasswordLocator)).isDisplayed();
+        vek21Page.clickButtonSubmit();
+        String actualErrorMessageEmptyEmail = vek21Page.getErrorMessageIncorrectEmail();
+        String actualErrorMessageEmptyPassword = vek21Page.getErrorMessageEmptyPassword();
+        boolean errorIconEmail = vek21Page.getIconEmail();
+        boolean errorIconPassword = vek21Page.getIconPassword();
         Assertions.assertTrue(errorIconEmail);
         Assertions.assertEquals("Электронная почта не указана", actualErrorMessageEmptyEmail);
         Assertions.assertTrue(errorIconPassword);
@@ -45,56 +45,54 @@ public class Vek21Test {
     @Test
     public void vek21TestEmptyEmail() {
 
-        driver.findElement(By.xpath(vek21Page.inputPasswrodLocator)).sendKeys("Test");
-        driver.findElement(By.xpath(vek21Page.buttonSubmitLocator)).click();
-        String actualErrorMessageEmptyEmail = driver.findElement(By.xpath((vek21Page.errorMessageEmptyEmailLocator))).getText();
-        boolean errorIconEmail = driver.findElement(By.xpath(vek21Page.errorIconEmailLocator)).isDisplayed();
+        vek21Page.sendKeysPassword("TEST");
+        vek21Page.clickButtonSubmit();
+        String actualErrorMessageEmptyEmail = vek21Page.getErrorMessageIncorrectEmail();
+        boolean errorIconEmail = vek21Page.getIconEmail();
         Assertions.assertTrue(errorIconEmail);
         Assertions.assertEquals("Электронная почта не указана", actualErrorMessageEmptyEmail);
-        driver.quit();
     }
 
     @Test
     public void vek21TestIncorrectEmail() {
 
-        driver.findElement(By.xpath(vek21Page.inputEmailLocator)).sendKeys("Test");
-        driver.findElement(By.xpath(vek21Page.inputPasswrodLocator)).sendKeys("Test");
-        driver.findElement(By.xpath(vek21Page.buttonSubmitLocator)).click();
-        String actualErrorMessageIncorrectEmail = driver.findElement(By.xpath((vek21Page.errorMessageIncorrectEmailLocator))).getText();
-        boolean errorIconEmail = driver.findElement(By.xpath(vek21Page.errorIconEmailLocator)).isDisplayed();
+        vek21Page.sendKeysEmail("Test");
+        vek21Page.sendKeysPassword("Test");
+        vek21Page.clickButtonSubmit();
+        String actualErrorMessageIncorrectEmail = vek21Page.getErrorMessageIncorrectEmail();
+        boolean errorIconEmail = vek21Page.getIconEmail();
         Assertions.assertTrue(errorIconEmail);
         Assertions.assertEquals("Неправильный формат электронной почты", actualErrorMessageIncorrectEmail);
-        driver.quit();
     }
 
     @Test
     public void vek21TestEmptyPassword() {
 
-        driver.findElement(By.xpath(vek21Page.inputEmailLocator)).sendKeys("Test@test.test");
-        driver.findElement(By.xpath(vek21Page.buttonSubmitLocator)).click();
-        String actualErrorMessageEmptyPassword = driver.findElement(By.xpath((vek21Page.errorMessageEmptyPasswordLocator))).getText();
-        boolean errorIconPassword = driver.findElement(By.xpath(vek21Page.errorIconPasswordLocator)).isDisplayed();
+        vek21Page.sendKeysEmail("Test@test.test");
+        vek21Page.clickButtonSubmit();
+        String actualErrorMessageEmptyPassword = vek21Page.getErrorMessageEmptyPassword();
+        boolean errorIconPassword = vek21Page.getIconPassword();
         Assertions.assertTrue(errorIconPassword);
         Assertions.assertEquals("Пароль не указан", actualErrorMessageEmptyPassword);
-        driver.quit();
     }
 
     @Test
     public void vek21TestIncorrectPassword() throws InterruptedException {
 
-        driver.findElement(By.xpath(vek21Page.inputEmailLocator)).sendKeys("Test@test.test");
-        driver.findElement(By.xpath(vek21Page.inputPasswrodLocator)).sendKeys("Test");
-        driver.findElement(By.xpath(vek21Page.buttonSubmitLocator)).click();
+        vek21Page.sendKeysEmail("Test@test.test");
+        vek21Page.sendKeysPassword("Test");
+        vek21Page.clickButtonSubmit();
         Thread.sleep(1000);
-        String actualErrorMessageIncorrectPassword = driver.findElement(By.xpath((vek21Page.errorMessageIncorrectPasswordLocator))).getText();
-        boolean errorIconPassword = driver.findElement(By.xpath(vek21Page.errorIconPasswordLocator)).isDisplayed();
+        String actualErrorMessageIncorrectPassword = vek21Page.getErrorMessageIncorrectPassword();
+        boolean errorIconPassword = vek21Page.getIconPassword();
         Assertions.assertTrue(errorIconPassword);
         Assertions.assertEquals("Неправильный пароль. \n" + "Сбросить пароль?", actualErrorMessageIncorrectPassword);
-        driver.quit();
+
     }
 
     @AfterEach
     public void quitDriver() {
+
         driver.quit();
     }
 

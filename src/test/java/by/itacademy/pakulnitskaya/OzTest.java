@@ -1,12 +1,11 @@
 package by.itacademy.pakulnitskaya;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OzTest {
 
     private OzPage ozPage;
@@ -23,12 +22,14 @@ public class OzTest {
         ozPage.clickLinkEmailOption();
     }
 
+    @Order(2)
     @Test
     public void ozCheckEnterMessage() throws InterruptedException {
         String actualErrorMessage = ozPage.getTextEnter();
         Assertions.assertEquals("Вход", actualErrorMessage);
     }
 
+    @Order(1)
     @Test
     public void ozIncorrectCredentials() throws InterruptedException {
         ozPage.sendKeysEmail("test@testets.test");

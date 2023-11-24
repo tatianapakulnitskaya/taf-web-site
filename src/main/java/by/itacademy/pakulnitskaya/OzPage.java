@@ -31,8 +31,8 @@ public class OzPage {
         driver.findElement(By.xpath(inputEmailLocator)).sendKeys(newEmail);
 
     }
-    public void sendKeysPassword(String newEmail) {
-        driver.findElement(By.xpath(inputPasswordLocator)).sendKeys(newEmail);
+    public void sendKeysPassword(String newPassword) {
+        driver.findElement(By.xpath(inputPasswordLocator)).sendKeys(newPassword);
 
     }
 

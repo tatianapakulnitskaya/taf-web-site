@@ -4,17 +4,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
+//import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Vek21Test {
-    private WebDriver driver;
+
     private Vek21Page vek21Page;
+    private WebDriver driver = new ChromeDriver();
+
 
     @BeforeEach
     public void loadPage() throws InterruptedException {
-        driver = new ChromeDriver();
+
         driver.manage().window().maximize();
         driver.get("https://www.21vek.by/");
         Thread.sleep(2000);

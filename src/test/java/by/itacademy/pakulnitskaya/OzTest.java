@@ -12,7 +12,7 @@ public class OzTest {
     private WebDriver driver = new ChromeDriver();
 
     @BeforeEach
-    public void loadPage() throws InterruptedException {
+    public void loadPage() {
         driver.manage().window().maximize();
         driver.get("https://www.oz.by/");
 
@@ -24,7 +24,7 @@ public class OzTest {
 
     @Order(2)
     @Test
-    public void ozCheckEnterMessage() throws InterruptedException {
+    public void ozCheckEnterMessage() {
         String actualErrorMessage = ozPage.getTextEnter();
         Assertions.assertEquals("Вход", actualErrorMessage);
     }

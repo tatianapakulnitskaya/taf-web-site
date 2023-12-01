@@ -1,20 +1,16 @@
 package by.itacademy.pakulnitskaya;
 
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class OzTest {
-
+public class OzTest extends BaseTest {
     private OzPage ozPage;
-    private WebDriver driver = new ChromeDriver();
+    private String baseurl = "https://www.oz.by/";
 
     @BeforeEach
-    public void loadPage() {
+    public void loadOzPage() {
         driver.manage().window().maximize();
-        driver.get("https://www.oz.by/");
+        driver.get(baseurl);
 
         ozPage = new OzPage(driver);
 
@@ -38,10 +34,5 @@ public class OzTest {
         Thread.sleep(2000);
         String actualErrorMessage = ozPage.getTextError();
         Assertions.assertEquals("Адрес электронной почты не зарегистрирован. Зарегистрироваться", actualErrorMessage);
-    }
-
-    @AfterEach
-    public void quitDriver() {
-        driver.quit();
     }
 }

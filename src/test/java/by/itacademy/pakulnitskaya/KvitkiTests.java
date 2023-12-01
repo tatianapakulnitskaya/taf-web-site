@@ -1,21 +1,21 @@
 package by.itacademy.pakulnitskaya;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class KvitkiTests {
-
+public class KvitkiTests extends BaseTest {
     private KvitkiPage kvitkiPage;
-    private WebDriver driver = new ChromeDriver();
+    private String baseurl = "https://www.kvitki.by/";
+    private String alertEmptyPassword = "Пожалуйста, заполните поле (Пароль)";
+    private String alertEmptyEmail = "Пожалуйста, заполните поле (Эл. почта)";
+    private String alertIncorrectEmail = "Пожалуйста, введите адрес электронной почты в правильном формате: name@example.com";
+    private String alertExpiredCredentials = "Электронная почта или пароль недействительны. Система была обновлена, и в связи с этим мы перешли на вход по электронной почте.";
 
     @BeforeEach
-    public void loadPage() throws InterruptedException {
-        driver.manage().window().maximize();
-        driver.get("https://www.kvitki.by/");
+    public void loadKvitkiPage() throws InterruptedException {
+        driver.get(baseurl);
+        Thread.sleep(2000);
 
         kvitkiPage = new KvitkiPage(driver);
 
@@ -32,8 +32,8 @@ public class KvitkiTests {
         kvitkiPage.clickInputPassword();
         kvitkiPage.clickInputEmail();
         Thread.sleep(2000);
-        String actualTextEmptyPassword =  kvitkiPage.getTextEmptyPassword();
-        Assertions.assertEquals("Пожалуйста, заполните поле (Пароль)", actualTextEmptyPassword);
+        String actualAlertEmptyPassword = kvitkiPage.getTextEmptyPassword();
+        Assertions.assertEquals(alertEmptyPassword, actualAlertEmptyPassword);
     }
 
     @Test
@@ -42,8 +42,8 @@ public class KvitkiTests {
         kvitkiPage.clickInputEmail();
         kvitkiPage.clickInputPassword();
         Thread.sleep(2000);
-        String actualTextEmptyEmail =  kvitkiPage.getTextEmptyEmail();
-        Assertions.assertEquals("Пожалуйста, заполните поле (Эл. почта)", actualTextEmptyEmail);
+        String actualAlertEmptyEmail = kvitkiPage.getTextEmptyEmail();
+        Assertions.assertEquals(alertEmptyEmail, actualAlertEmptyEmail);
     }
 
     @Test
@@ -51,8 +51,8 @@ public class KvitkiTests {
         kvitkiPage.sendKeysEmail("test");
         kvitkiPage.clickInputPassword();
         Thread.sleep(2000);
-        String actualTextIncorrectEmail =  kvitkiPage.getTextIncorrectEmail();
-        Assertions.assertEquals("Пожалуйста, введите адрес электронной почты в правильном формате: name@example.com", actualTextIncorrectEmail);
+        String actualTextIncorrectEmail = kvitkiPage.getTextIncorrectEmail();
+        Assertions.assertEquals(alertIncorrectEmail, actualTextIncorrectEmail);
     }
 
     @Test
@@ -61,12 +61,7 @@ public class KvitkiTests {
         kvitkiPage.sendKeysPassword("test");
         kvitkiPage.clickButtonEnter();
         Thread.sleep(2000);
-        String actualTextIncorrectLogin =  kvitkiPage.getTextIncorrectLogin();
-        Assertions.assertEquals("Электронная почта или пароль недействительны. Система была обновлена, и в связи с этим мы перешли на вход по электронной почте.", actualTextIncorrectLogin);
-    }
-
-    @AfterEach
-    public void quitDriver() {
-        driver.quit();
+        String actualTextIncorrectLogin = kvitkiPage.getTextIncorrectLogin();
+        Assertions.assertEquals(alertExpiredCredentials, actualTextIncorrectLogin);
     }
 }

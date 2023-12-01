@@ -5,20 +5,18 @@ import org.openqa.selenium.WebDriver;
 
 public class KvitkiPage {
     private WebDriver driver;
+    private String iconEnterLocator = "/html/body/div[3]/div[2]/div/app-user-account-link/app-profile-link";
+    private String buttonCookiesLocator = "//*[@id=\"CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll\"]";
+    private String buttonAdvertisementLocator = "/html/body/div[7]/div";
+    private String textEnterLocator = "//*[@id=\"mat-tab-label-0-0\"]/span[2]/span[1]";
+    private String inputEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/div/input";
+    private String inputPasswordLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[2]/app-password-input/div/input";
+    private String textEmptyPasswordLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[2]/app-password-input/app-field-error/app-collapsible";
+    private String textEmptyEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/app-field-error/app-collapsible";
+    private String textIncorrectEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/app-field-error/app-collapsible";
+    private String textIncorrectLoginLocator = "//*[@id=\"mat-mdc-dialog-1\"]/div/div/app-info-dialog-content/div[3]";
+    private String buttonEnterLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-ui-button/button";
 
-    public String iconEnterLocator = "/html/body/div[3]/div[2]/div/app-user-account-link/app-profile-link";
-    public String buttonCookiesLocator = "//*[@id=\"CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll\"]";
-
-    public String buttonAdvertisementLocator = "/html/body/div[7]/div";
-    public String textEnterLocator = "//*[@id=\"mat-tab-label-0-0\"]/span[2]/span[1]";
-    public String inputEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/div/input";
-    public String inputPasswordLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[2]/app-password-input/div/input";
-
-    public String textEmptyPasswordLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[2]/app-password-input/app-field-error/app-collapsible";
-    public String textEmptyEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/app-field-error/app-collapsible";
-    public String textIncorrectEmailLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-form-builder/form/app-collapsible[1]/app-email-input/app-field-error/app-collapsible";
-    public String textIncorrectLoginLocator = "//*[@id=\"mat-mdc-dialog-1\"]/div/div/app-info-dialog-content/div[3]";
-public String buttonEnterLocator = "/html/body/div[9]/div[2]/div/mat-dialog-container/div/div/app-user-auth-form/div[2]/mat-tab-group/div/mat-tab-body[1]/div/app-user-login-form/app-collapsible/div/app-ui-button/button";
     public KvitkiPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -68,9 +66,11 @@ public String buttonEnterLocator = "/html/body/div[9]/div[2]/div/mat-dialog-cont
     public String getTextIncorrectEmail() {
         return driver.findElement(By.xpath((textIncorrectEmailLocator))).getText();
     }
+
     public void clickButtonEnter() {
         driver.findElement(By.xpath(buttonEnterLocator)).click();
     }
+
     public String getTextIncorrectLogin() {
         return driver.findElement(By.xpath((textIncorrectLoginLocator))).getText();
     }

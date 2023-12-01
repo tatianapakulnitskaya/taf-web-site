@@ -1,86 +1,69 @@
 package by.itacademy.pakulnitskaya;
 
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.assertj.core.api.SoftAssertions;
-import org.testng.asserts.SoftAssert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-
-public class BrwTests {
-
+public class BrwTests extends BaseTest {
     private BrwPage brwPage;
-    private WebDriver driver = new ChromeDriver();
-
+    private String baseurl = "https://pass.rw.by/ru/";
+    private String textAuthorization = "Авторизация";
+    private String textInputFiled = "Заполните поле";
+    private String alertUserNotFound = "Пользователь не найден";
 
     @BeforeEach
-    public void loadPage() throws InterruptedException {
-        driver.manage().window().maximize();
-        driver.get("https://pass.rw.by/ru/");
+    public void loadBrwPage() throws InterruptedException {
+        driver.get(baseurl);
         Thread.sleep(2000);
 
         brwPage = new BrwPage(driver);
 
         brwPage.clickTextAlert();
         brwPage.clickLinkLogin();
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void brwCheckWindowName() throws InterruptedException {
+        String actualTextAuthorization = brwPage.getTextAuthorization();
+        Assertions.assertEquals(textAuthorization, actualTextAuthorization);
     }
 
     @Test
     public void brwCheckEmptyEmailPassword() throws InterruptedException {
-        Thread.sleep(2000);
-        String actualTextAuthorization = brwPage.getTextAuthorization();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals("Авторизация",actualTextAuthorization,"Title is not mathing");
         brwPage.clickButtonEnter();
         Thread.sleep(2000);
         String actualTextErrorEmptyEmail = brwPage.getTextErrorEmptyEmail();
-        Assertions.assertEquals("Заполните поле", actualTextErrorEmptyEmail);
+        Assertions.assertEquals(textInputFiled, actualTextErrorEmptyEmail);
         String actualTextErrorEmptyPassword = brwPage.getTextErrorEmptyPassword();
-        Assertions.assertEquals("Заполните поле", actualTextErrorEmptyPassword);
+        Assertions.assertEquals(textInputFiled, actualTextErrorEmptyPassword);
     }
 
     @Test
     public void brwCheckEmptyPassword() throws InterruptedException {
-        Thread.sleep(2000);
-        String actualTextAuthorization = brwPage.getTextAuthorization();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals("Авторизация",actualTextAuthorization,"Title is not mathing");
         brwPage.sendKeysEmail("test@test.test");
         brwPage.clickButtonEnter();
         Thread.sleep(2000);
         String actualTextErrorEmptyPassword = brwPage.getTextErrorEmptyPassword();
-        Assertions.assertEquals("Заполните поле", actualTextErrorEmptyPassword);
+        Assertions.assertEquals(textInputFiled, actualTextErrorEmptyPassword);
     }
 
     @Test
     public void brwCheckEmptyEmail() throws InterruptedException {
-        Thread.sleep(2000);
-        String actualTextAuthorization = brwPage.getTextAuthorization();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals("Авторизация",actualTextAuthorization,"Title is not mathing");
         brwPage.sendKeysPassword("test");
         brwPage.clickButtonEnter();
         Thread.sleep(2000);
         String actualTextErrorEmptyEmail = brwPage.getTextErrorEmptyEmail();
-        Assertions.assertEquals("Заполните поле", actualTextErrorEmptyEmail);
+        Assertions.assertEquals(textInputFiled, actualTextErrorEmptyEmail);
     }
 
     @Test
     public void brwCheckIncorrectEmailPassword() throws InterruptedException {
-        Thread.sleep(2000);
-        String actualTextAuthorization = brwPage.getTextAuthorization();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals("Авторизация",actualTextAuthorization,"Title is not mathing");
         brwPage.sendKeysEmail("test@test.test");
         brwPage.sendKeysPassword("test");
         brwPage.clickButtonEnter();
         Thread.sleep(2000);
         String actualTextErrorIncorrectLogin = brwPage.getTextErrorIncorrectLogin();
-        Assertions.assertEquals("Пользователь не найден", actualTextErrorIncorrectLogin);
-    }
-
-    @AfterEach
-    public void quitDriver() {
-        driver.quit();
+        Assertions.assertEquals(alertUserNotFound, actualTextErrorIncorrectLogin);
     }
 }

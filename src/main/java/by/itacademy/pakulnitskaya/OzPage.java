@@ -18,6 +18,7 @@ public class OzPage {
     public OzPage(WebDriver driver) {
         this.driver = driver;
     }
+
     public void clickEnterButton() {
         driver.findElement(By.xpath(buttonEnterLocator)).click();
     }

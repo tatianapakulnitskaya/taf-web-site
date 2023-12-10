@@ -1,9 +1,8 @@
 package by.itacademy.pakulnitskaya;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Vek21Test extends BaseTest {
     private Vek21Page vek21Page;
     private String baseurl = "https://www.21vek.by/";
